@@ -30,7 +30,7 @@ import { ConfigModule } from '@nestjs/config';
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      envFilePath: ['/.env.dev', '/.env.prod'],
+      envFilePath: ['/.env', '/.env.dev'],
     }),
     PasswordResetModule,
     AuthModule,

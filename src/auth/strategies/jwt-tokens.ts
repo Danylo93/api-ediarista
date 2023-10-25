@@ -23,11 +23,11 @@ export class JwtTokens {
   async gerarTokens(payload: JwtPayload): Promise<ITokens> {
     const [accessToken, refreshToken] = await Promise.all([
       this.jwtService.signAsync(payload, {
-        secret: 'tw-access',
+        secret: process.env.JWT_KEY,
         expiresIn: 50000,
       }),
       this.jwtService.signAsync(payload, {
-        secret: 'tw-refresh',
+        secret: process.env.JWT_KEY_REFRESH,
         expiresIn: 120,
       }),
     ]);

@@ -14,7 +14,7 @@ export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
     private mapper: UsuarioMapper,
   ) {
     super({
-      secretOrKey: 'tw-access',
+      secretOrKey: process.env.JWT_KEY,
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       ignoreExpiration: false,
     });
