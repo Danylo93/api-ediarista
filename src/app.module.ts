@@ -41,7 +41,7 @@ import { ConfigModule } from '@nestjs/config';
     EnderecoModule,
     ServicosModule,
     UrlGeneratorModule.forRoot({
-      appUrl: `http://localhost:${process.env.PORT}`,
+      appUrl: 'https://ediaristas-nestjs-api-8e007fe4302f.herokuapp.com',
     }),
     MeModule,
     TokensModule,
