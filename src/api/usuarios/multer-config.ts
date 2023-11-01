@@ -6,7 +6,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { config } from 'dotenv';
 import { join } from 'path';
 
-//config({ path: join(__dirname, '..', '..', '..', '/.env') });
+config({ path: join(__dirname, '..', '..', '..', '/.env.dev') });
 config();
 const multerConfigDisk = {
   storage: diskStorage({

@@ -19,11 +19,12 @@ import { ValidatorDiariaUsuario } from 'src/core/validators/diaria/validator-dia
 import { AvaliacaoRepository } from '../avaliacoes/avaliacao.repository';
 import { AvaliacaoMapper } from '../avaliacoes/avaliacao.mapper';
 import { Avaliacao } from '../avaliacoes/entities/avaliacao.entity';
-import { GatewayPagamentoService } from 'src/core/services/gateway-pagamento/gateway-pagamento.service';
-import { PagarmeService } from 'src/core/services/gateway-pagamento/providers/pagarme.service';
+
 import { Pagamento } from '../pagamentos/entities/pagamento.entity';
 import { PagamentoRepository } from '../pagamentos/pagamentos.repository';
 import { HateoasUsuario } from 'src/core/hateoas/hateoas-usuario';
+import { PagarmeService } from 'src/core/services/gateway-pagamento/providers/pagarme.service';
+import { GatewayPagamentoService } from 'src/core/services/gateway-pagamento/gateway-pagamento.service';
 
 @Module({
   imports: [

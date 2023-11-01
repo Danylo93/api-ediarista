@@ -30,7 +30,7 @@ import { ConfigModule } from '@nestjs/config';
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      envFilePath: ['/.env', '/.env.dev'],
+      envFilePath: ['/.env.dev', '/.env'],
     }),
     PasswordResetModule,
     AuthModule,
@@ -41,7 +41,7 @@ import { ConfigModule } from '@nestjs/config';
     EnderecoModule,
     ServicosModule,
     UrlGeneratorModule.forRoot({
-      appUrl: 'https://ediaristas-nestjs-api-8e007fe4302f.herokuapp.com',
+      appUrl: 'http://192.168.1.180:8000',
     }),
     MeModule,
     TokensModule,

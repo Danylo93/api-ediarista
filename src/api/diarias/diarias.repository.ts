@@ -95,10 +95,10 @@ export class DiariaRepository {
         `select * from diaria where status = ${DiariaStatus.PAGO}
         and codigo_ibge IN (${cidades})
         and (select count(*)
-        from diaria_candidato
-        where diaria.id = diaria_candidato.diaria_id) < 4
-        and not exists (select * from diaria_candidato
-        where diaria.id = diaria_candidato.diaria_id
+        from diaria_candidatos
+        where diaria.id = diaria_candidatos.diaria_id) < 4
+        and not exists (select * from diaria_candidatos
+        where diaria.id = diaria_candidatos.diaria_id
         and usuario_api_id = ${usuarioLogado.id})`,
       );
 
