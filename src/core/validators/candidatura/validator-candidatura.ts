@@ -5,59 +5,71 @@ import { UsuarioApi } from 'src/api/usuarios/entities/usuario.entity';
 
 @Injectable()
 export class ValidatorCandidatura {
-  async validar(usuarioLogado: UsuarioApi, diaria: Diaria) {
-    this.validarEnderecoCandidato(usuarioLogado);
-    this.validarDuplicidadeCandidato(diaria, usuarioLogado);
-    this.quantidadeCandidatos(diaria);
+  async validar(usuario: UsuarioApi, diaria?: Diaria) {
+    this.validarEnderecoCandidato(usuario);
+    this.validarDuplicidadeCandidato(diaria, usuario);
+    this.validarQuantidadeCandidatos(diaria);
     this.validarStatusDiaria(diaria);
     this.validarDataAtendimento(diaria);
     this.validarDiaristaDiaria(diaria);
   }
-  private validarDiaristaDiaria(diaria: Diaria) {
-    if (diaria.diarista) {
-      throw new BadRequestException('Diária já possui um(a) diarista');
+
+  private validarEnderecoCandidato(usuario: UsuarioApi) {
+    if (!usuario.endereco) {
+      const message = {
+        candidatos: 'Diarista deve ter o endereço cadastrado',
+      };
+      throw new BadRequestException(message);
     }
   }
 
-  private validarDataAtendimento(diaria: Diaria) {
-    const dataAtual = new Date(Date.now());
+  private validarDuplicidadeCandidato(diaria: Diaria, usuario: UsuarioApi) {
+    const candidatos = diaria.candidatos;
 
-    if (diaria.dataAtendimento < dataAtual) {
-      throw new BadRequestException('Data de atendimento Expirada');
+    if (candidatos.find((user) => user.id === usuario.id)) {
+      const message = {
+        candidatos: 'Diarista já se candidatou para essa diária',
+      };
+      throw new BadRequestException(message);
+    }
+  }
+
+  private validarQuantidadeCandidatos(diaria: Diaria) {
+    const candidatos = diaria.candidatos;
+
+    if (candidatos.length >= 3) {
+      const message = {
+        candidatos: 'Diária já possui número máximo de canditados',
+      };
+      throw new BadRequestException(message);
     }
   }
 
   private validarStatusDiaria(diaria: Diaria) {
     if (diaria.status != DiariaStatus.PAGO) {
-      throw new BadRequestException('Diára não está com status pago');
+      const message = {
+        status: 'Diária não está com status pago',
+      };
+      throw new BadRequestException(message);
     }
   }
 
-  private quantidadeCandidatos(diaria: Diaria) {
-    const candidatos = diaria.candidatos;
-    const maximoCandidatos = 3;
-
-    if (candidatos.length >= maximoCandidatos) {
-      throw new BadRequestException('Diária possui número máximo de canidatos');
+  private validarDataAtendimento(diaria: Diaria) {
+    const dataAtual = new Date(Date.now());
+    if (diaria.dataAtendimento < dataAtual) {
+      const message = {
+        data_atendimento: 'Data de atendimento expirada',
+      };
+      throw new BadRequestException(message);
     }
   }
 
-  private validarDuplicidadeCandidato(
-    diaria: Diaria,
-    usuarioLogado: UsuarioApi,
-  ) {
-    const candidatos = diaria.candidatos;
-
-    if (candidatos.find((user) => user.id === usuarioLogado.id)) {
-      throw new BadRequestException(
-        'Diarista já se candidatou para essa diária',
-      );
-    }
-  }
-
-  private validarEnderecoCandidato(usuarioLogado: UsuarioApi) {
-    if (!usuarioLogado.endereco) {
-      throw new BadRequestException('Diarista deve ter o endereço cadastrado');
+  validarDiaristaDiaria(diaria: Diaria) {
+    if (diaria.diarista) {
+      const message = {
+        diarista: 'Diária já possui um diarista',
+      };
+      throw new BadRequestException(message);
     }
   }
 }

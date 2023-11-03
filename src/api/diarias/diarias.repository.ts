@@ -1,7 +1,6 @@
 import { NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Avaliacao } from '../avaliacoes/entities/avaliacao.entity';
 import { Servico } from '../servicos/entities/servico.entity';
 import { UsuarioApi } from '../usuarios/entities/usuario.entity';
 import { DiariaRequestDto } from './dto/diaria-request.dto';
@@ -95,10 +94,10 @@ export class DiariaRepository {
         `select * from diaria where status = ${DiariaStatus.PAGO}
         and codigo_ibge IN (${cidades})
         and (select count(*)
-        from diaria_candidatos
-        where diaria.id = diaria_candidatos.diaria_id) < 4
-        and not exists (select * from diaria_candidatos
-        where diaria.id = diaria_candidatos.diaria_id
+        from diaria_candidato
+        where diaria.id = diaria_candidato.diaria_id) < 4
+        and not exists (select * from diaria_candidato
+        where diaria.id = diaria_candidato.diaria_id
         and usuario_api_id = ${usuarioLogado.id})`,
       );
 

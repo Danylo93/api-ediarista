@@ -41,7 +41,7 @@ import { ConfigModule } from '@nestjs/config';
     EnderecoModule,
     ServicosModule,
     UrlGeneratorModule.forRoot({
-      appUrl: 'http://192.168.1.180:8000',
+      appUrl: 'http://localhost:8000',
     }),
     MeModule,
     TokensModule,

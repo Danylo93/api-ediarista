@@ -3,11 +3,9 @@ import { Diaria } from 'src/api/diarias/entities/diaria.entity';
 import DiariaStatus from 'src/api/diarias/enum/diaria-status.enum';
 
 export class ValidatorConfirmacaoDiaria {
-  validarStatusConfirmado(diaria: Diaria) {
+  async validarStatusConfirmado(diaria: Diaria) {
     if (diaria.status !== DiariaStatus.CONFIRMADO) {
-      throw new BadRequestException(
-        'Diária precisa estar com status Confirmado',
-      );
+      throw new BadRequestException('Diária precisa estar confirmada');
     }
   }
 

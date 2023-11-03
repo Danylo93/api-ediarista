@@ -20,7 +20,7 @@
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "typeorm": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js",
-    "typeorm:migrate": "cross-var npm run typeorm -- -d ./src/database/migrations-config.ts migration:generate ./src/database/migrations/postgres/$npm_config_name",
+    "typeorm:migrate": "cross-var npm run typeorm -- -d ./src/database/migrations-config.ts migration:generate ./src/database/migrations/mysql/$npm_config_name",
     "typeorm:run": "npm run typeorm -- -d ./src/database/migrations-config.ts migration:run",
     "typeorm:revert": "npm run typeorm -- -d ./src/database/migrations-config.ts migration:revert"
   },

@@ -1,7 +1,7 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { HateoasDiaria } from 'src/core/hateoas/hateoas-diaria';
-
+import { GatewayPagamentoService } from 'src/core/services/gateway-pagamento/gateway-pagamento.service';
 import { ValidatorDiaria } from 'src/core/validators/diaria/validator-diaria';
 import { ValidatorDiariaUsuario } from 'src/core/validators/diaria/validator-diaria-usuario';
 import { Repository } from 'typeorm';
@@ -17,7 +17,6 @@ import { DiariaRequestDto } from './dto/diaria-request.dto';
 import { DiariaResponseDto } from './dto/diaria-response.dto';
 import { Diaria } from './entities/diaria.entity';
 import DiariaStatus from './enum/diaria-status.enum';
-import { GatewayPagamentoService } from 'src/core/services/gateway-pagamento/gateway-pagamento.service';
 
 @Injectable()
 export class DiariasService {
