@@ -22,7 +22,7 @@ export class DiaristaIndiceService implements DiaristaServiceSelecao {
     diaria: Diaria,
     destino: string,
   ): Promise<UsuarioApi> {
-    let maiorIndice = 0;
+    let maiorIndice = Number.NEGATIVE_INFINITY;
     let melhorCandidato: UsuarioApi;
 
     for (let i = 0; i < diaria.candidatos.length; i++) {

@@ -15,7 +15,7 @@ export class ScheduleTask {
   ) {}
   private readonly logger = new Logger(ScheduleTask.name);
 
-  @Cron(CronExpression.EVERY_10_HOURS)
+  @Cron(CronExpression.EVERY_10_SECONDS)
   async selecionarDiaristaDiaria() {
     this.logger.debug(
       'Task de seleção de diaristas para diárias aptas iniciada',
