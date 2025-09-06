@@ -34,6 +34,10 @@ Aplicação (API) desenvolvida durante a imersão Multi-Stack da TreinaWeb.
 $ npm install
 ```
 
+## Environment
+
+Configure the environment variable `STRIPE_SECRET_KEY` with your Stripe secret key to enable payment processing.
+
 ## Running the app
 
 ```bash

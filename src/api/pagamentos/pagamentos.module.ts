@@ -8,7 +8,7 @@ import { ValidatorPagamento } from 'src/core/validators/pagamento/validator-paga
 import { Pagamento } from './entities/pagamento.entity';
 import { PagamentoRepository } from './pagamentos.repository';
 import { GatewayPagamentoService } from 'src/core/services/gateway-pagamento/gateway-pagamento.service';
-import { PagarmeService } from 'src/core/services/gateway-pagamento/providers/pagarme.service';
+import { StripeService } from 'src/core/services/gateway-pagamento/providers/stripe.service';
 import { PagamentoMapper } from './pagamento.mapper';
 
 @Module({
@@ -22,7 +22,7 @@ import { PagamentoMapper } from './pagamento.mapper';
     PagamentoRepository,
     {
       provide: GatewayPagamentoService,
-      useClass: PagarmeService,
+      useClass: StripeService,
     },
   ],
 })
