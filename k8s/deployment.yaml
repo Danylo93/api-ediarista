@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: api-ediarista
-          image: your-dockerhub-username/api-ediarista:latest
+          image: dan1993/api-ediarista:latest
           ports:
             - containerPort: 3000
           env:

@@ -1,7 +1,8 @@
 node_modules
 npm-debug.log
-dist
+yarn.lock
+package-lock.json
 Dockerfile
-.dockerignore
+docker-compose.yml
 .git
 .gitignore

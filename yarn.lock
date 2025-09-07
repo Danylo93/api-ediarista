@@ -947,11 +947,6 @@
   resolved "https://registry.npmjs.org/@css-inline/css-inline-linux-x64-musl/-/css-inline-linux-x64-musl-0.13.0.tgz"
   integrity sha512-2tCnwU23W/yMs9cGc2/i2jd9y2pjuntx0a5OytqX7s9fvUtmI3nc0Od6wuf51LnmdU+XAU8HLT9pZppsQiwPfQ==
 
-"@css-inline/css-inline-win32-x64-msvc@^0.17.0":
-  version "0.17.0"
-  resolved "https://registry.npmjs.org/@css-inline/css-inline-win32-x64-msvc/-/css-inline-win32-x64-msvc-0.17.0.tgz"
-  integrity sha512-CDCcVgBFxaun1LZhgnOBen/DnFGIdg88k3rQ653mB4qVsfI7Kyt8V3ezYdWAN7rZKvQL/sRQG4LOVAjPsrJWgA==
-
 "@css-inline/css-inline-win32-x64-msvc@0.13.0":
   version "0.13.0"
   resolved "https://registry.npmjs.org/@css-inline/css-inline-win32-x64-msvc/-/css-inline-win32-x64-msvc-0.13.0.tgz"
@@ -2080,12 +2075,10 @@
   dependencies:
     "@babel/types" "^7.28.2"
 
-"@types/bcryptjs@^5.0.0":
-  version "5.0.2"
-  resolved "https://registry.npmjs.org/@types/bcryptjs/-/bcryptjs-5.0.2.tgz"
-  integrity sha512-6atioO8Y75fNcbmj0G7UjI9lXN2pQ/IGJ2FWT4a/btd0Lk9lQalHLKhkgKVZ3r+spnmWUKfbMi1GEe9wyHQfNQ==
-  dependencies:
-    "@types/node" "*"
+"@types/bcryptjs@^2.4.6":
+  version "2.4.6"
+  resolved "https://registry.npmjs.org/@types/bcryptjs/-/bcryptjs-2.4.6.tgz"
+  integrity sha512-9xlo6R2qDs5uixm0bcIqCeMCE6HiQsIyel9KQySStiyqNl2tnj2mP3DX1Nf56MD6KMenNNlBBsy3LJ7gUEQPXQ==
 
 "@types/body-parser@*":
   version "1.19.6"
