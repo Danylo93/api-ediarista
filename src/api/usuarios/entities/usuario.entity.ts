@@ -11,7 +11,7 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import * as bcrypt from 'bcrypt';
+import * as bcryptjs from 'bcryptjs';
 import { CidadesAtendidas } from 'src/api/cidades-atendidas/entities/cidades-atendida.entity';
 import { Exclude } from 'class-transformer';
 import { EnderecoDiarista } from 'src/api/endereco-diarista/entities/endereco-diarista.entity';
@@ -97,8 +97,8 @@ export class UsuarioApi {
 
   @BeforeInsert()
   async setPassword(senha: string) {
-    const salt = await bcrypt.genSalt();
-    this.senha = await bcrypt.hash(senha || this.senha, salt);
+    const salt = await bcryptjs.genSalt();
+    this.senha = await bcryptjs.hash(senha || this.senha, salt);
     return this.senha;
   }
 }

@@ -23,7 +23,7 @@ import { Avaliacao } from '../avaliacoes/entities/avaliacao.entity';
 import { Pagamento } from '../pagamentos/entities/pagamento.entity';
 import { PagamentoRepository } from '../pagamentos/pagamentos.repository';
 import { HateoasUsuario } from 'src/core/hateoas/hateoas-usuario';
-import { PagarmeService } from 'src/core/services/gateway-pagamento/providers/pagarme.service';
+import { StripeService } from 'src/core/services/gateway-pagamento/providers/stripe.service';
 import { GatewayPagamentoService } from 'src/core/services/gateway-pagamento/gateway-pagamento.service';
 
 @Module({
@@ -55,7 +55,7 @@ import { GatewayPagamentoService } from 'src/core/services/gateway-pagamento/gat
     PagamentoRepository,
     {
       provide: GatewayPagamentoService,
-      useClass: PagarmeService,
+      useClass: StripeService,
     },
   ],
 })

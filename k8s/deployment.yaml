@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api-ediarista
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: api-ediarista
+  template:
+    metadata:
+      labels:
+        app: api-ediarista
+    spec:
+      containers:
+        - name: api-ediarista
+          image: dan1993/api-ediarista:latest
+          ports:
+            - containerPort: 3000
+          env:
+            - name: DATABASE_URL
+              value: postgres://postgres:postgres@db:5432/ediarista

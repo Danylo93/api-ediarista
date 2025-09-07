@@ -1,5 +1,5 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
-import * as bcrypt from 'bcrypt';
+import * as bcryptjs from 'bcryptjs';
 import { UsuarioRequestDto } from './dto/usuario-request.dto';
 import { UsuarioRepository } from './usuarios.repository';
 import { UsuarioMapper } from './usuarios.mapper';
@@ -16,6 +16,7 @@ import { join } from 'path';
 import { UsuarioAtualizarRequestDto } from './dto/usuario-atualizar-request.dto';
 import * as aws from 'aws-sdk';
 import { config } from 'dotenv';
+import { toInt } from 'src/utils/numbers';
 
 @Injectable()
 export class UsuariosService {
@@ -28,44 +29,29 @@ export class UsuariosService {
     private mailService: MailService,
     private jwtTokens: JwtTokens,
   ) {}
-  async cadastrar(
-    usuarioRequestDto: UsuarioRequestDto,
-    file: Express.MulterS3.File,
-    req: Request,
-  ) {
-    this.validator.validarConfirmacaoDeSenha(
-      usuarioRequestDto.password,
-      usuarioRequestDto.passwordConfirmation,
-    );
+  async cadastrar(dto: UsuarioRequestDto, file: Express.Multer.File, req: Request) {
+  this.validator.validarConfirmacaoDeSenha(dto.password, dto.passwordConfirmation);
+  dto.chavePix = this.validatorPix.validarUsuarioPix(dto);
 
-    usuarioRequestDto.chavePix =
-      this.validatorPix.validarUsuarioPix(usuarioRequestDto);
+  const foto = await this.foto.salvar(file, req);
+  const usuarioParaCadastrar = this.usuarioMapper.toUsuarioRequestDto(dto, foto);
 
-    const foto = await this.foto.salvar(file, req);
-    const usuarioParaCadastrar = this.usuarioMapper.toUsuarioRequestDto(
-      usuarioRequestDto,
-      foto,
-    );
+  const media = await this.calcularReputacaoMedia(dto.tipoUsuario);
+  usuarioParaCadastrar.reputacao = toInt(media, 5);   // ✅ SEM casas decimais
 
-    usuarioParaCadastrar.reputacao = await this.calcularReputacaoMedia(
-      usuarioRequestDto.tipoUsuario,
-    );
+  const usuarioCadastrado = await this.usuarioRepository.repository.save(usuarioParaCadastrar);
+  const usuarioCadastroDto = this.usuarioMapper.toUsuarioCadastroResponseDto(usuarioCadastrado);
 
-    const usuarioCadastrado = await this.usuarioRepository.repository.save(
-      usuarioParaCadastrar,
-    );
-    const usuarioCadastroDto =
-      this.usuarioMapper.toUsuarioCadastroResponseDto(usuarioCadastrado);
+  const { email } = usuarioCadastrado;
+  const payload: JwtPayload = { email };
+  usuarioCadastroDto.token = await this.jwtTokens.gerarTokens(payload);
+  return usuarioCadastroDto;
+}
 
-    const { email } = usuarioCadastrado;
-    const payload: JwtPayload = { email };
-    usuarioCadastroDto.token = await this.jwtTokens.gerarTokens(payload);
-    /* await this.mailService.enviarEmailDeConfirmacao(usuarioCadastrado); */
-    return usuarioCadastroDto;
-  }
+
 
   async atualizarFotoUsuario(
-    file: Express.MulterS3.File,
+    file: Express.Multer.File,
     usuarioLogado: UsuarioApi,
     req: Request,
   ): Promise<{ mensagem: string }> {
@@ -125,7 +111,7 @@ export class UsuariosService {
     const senhaRequest = atualizarUsuarioRequestDto.password;
     const senhaDB = usuarioLogado.senha;
 
-    if (!(await bcrypt.compare(senhaRequest, senhaDB))) {
+    if (!(await bcryptjs.compare(senhaRequest, senhaDB))) {
       throw new BadRequestException('A senha informada está incorreta');
     }
   }
@@ -160,15 +146,10 @@ export class UsuariosService {
   }
 
   private async calcularReputacaoMedia(tipoUsuario: number): Promise<number> {
-    let reputacaoMedia =
-      await this.usuarioRepository.repository.getMediaReputacao(tipoUsuario);
-
-    if (reputacaoMedia === null || reputacaoMedia === 0) {
-      reputacaoMedia = 5;
-    }
-
-    return reputacaoMedia;
-  }
+  let reputacaoMedia = await this.usuarioRepository.repository.getMediaReputacao(tipoUsuario);
+  if (reputacaoMedia === null || Number(reputacaoMedia) === 0) return 5;
+  return Number(reputacaoMedia); // deixa como number; o toInt trata na atribuição
+}
 
   private async apagarFotoDesatualizadaLocal(nome: string, id: number) {
     try {

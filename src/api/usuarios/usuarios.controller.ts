@@ -35,7 +35,7 @@ export class UsuariosController {
   @UseInterceptors(FileInterceptor('foto_documento', multerConfig))
   async cadastrar(
     @Body() usuarioRequestDto: UsuarioRequestDto,
-    @UploadedFile() file: Express.MulterS3.File,
+    @UploadedFile() file: Express.Multer.File,
     @Req() req: Request,
   ) {
     const usuarioCadastrado = await this.usuariosService.cadastrar(
@@ -56,7 +56,7 @@ export class UsuariosController {
   @UseInterceptors(FileInterceptor('foto_usuario', multerConfigProfile))
   async atualizarFotoUsuario(
     @GetUser() usuarioLogado: UsuarioApi,
-    @UploadedFile() file: Express.MulterS3.File,
+    @UploadedFile() file: Express.Multer.File,
     @Req() req: Request,
   ) {
     return await this.usuariosService.atualizarFotoUsuario(

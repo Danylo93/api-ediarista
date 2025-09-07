@@ -12,7 +12,7 @@ import { GoogleMatrixService } from './services/consulta-distancia/consulta-dist
 import { DiaristaServiceSelecao } from './services/diarista-indice/diarista-indice';
 import { DiaristaIndiceService } from './services/diarista-indice/diarista-indice.service';
 import { GatewayPagamentoService } from './services/gateway-pagamento/gateway-pagamento.service';
-import { PagarmeService } from './services/gateway-pagamento/providers/pagarme.service';
+import { StripeService } from './services/gateway-pagamento/providers/stripe.service';
 import { ScheduleTask } from './tasks/schedule-task';
 
 @Module({
@@ -41,7 +41,7 @@ import { ScheduleTask } from './tasks/schedule-task';
     },
     {
       provide: GatewayPagamentoService,
-      useClass: PagarmeService,
+      useClass: StripeService,
     },
   ],
 })
