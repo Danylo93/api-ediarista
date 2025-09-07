@@ -64,6 +64,27 @@ $ npm run test:e2e
 $ npm run test:cov
 ```
 
+## Docker
+
+This project includes a `Dockerfile` and a `docker-compose.yml` to build and run the application in containers.
+
+```bash
+# build image and start services
+docker-compose up --build
+
+# push the image to Docker Hub
+docker-compose push
+```
+
+## Kubernetes
+
+Kubernetes manifests are available in the `k8s/` directory. After pushing the image to Docker Hub, deploy with:
+
+```bash
+kubectl apply -f k8s/deployment.yaml
+kubectl apply -f k8s/service.yaml
+```
+
 ## Support
 
 Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
