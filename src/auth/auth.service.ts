@@ -1,5 +1,5 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
-import * as bcrypt from 'bcrypt';
+import * as bcryptjs from 'bcryptjs';
 import { Request } from 'express';
 import { UsuarioRepository } from 'src/api/usuarios/usuarios.repository';
 import { UsuarioAuthDto } from './dtos/usuario-auth.dto';
@@ -20,7 +20,7 @@ export class AuthService {
       email: email,
     });
 
-    if (usuario && (await bcrypt.compare(password, usuario.senha))) {
+    if (usuario && (await bcryptjs.compare(password, usuario.senha))) {
       const payload: JwtPayload = { email };
       return await this.jwtTokens.gerarTokens(payload);
     } else {

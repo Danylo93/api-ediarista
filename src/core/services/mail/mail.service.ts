@@ -17,14 +17,11 @@ export class MailService {
 
     await this.mailerService.sendMail({
       to: usuario.email,
-      from: '"E-Diaristas" <ediaristas@suporte.com>',
       subject: 'Bem vindo(a) ao E-Diaristas',
       template: 'confirmation',
-      context: {
-        nome: usuario.nomeCompleto,
-        tipoUsuario: tipoUsuario,
-      },
+      context: { /* ... */ },
     });
+
   }
 
   async enviarEmailDeResetDeSenha(passwordReset: PasswordReset) {

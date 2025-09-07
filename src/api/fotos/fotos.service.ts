@@ -11,12 +11,12 @@ export class FotosService {
     private fotoRepository: Repository<Foto>,
   ) {}
 
-  async salvar(file: Express.MulterS3.File, req: Request): Promise<Foto> {
+  async salvar(file: Express.Multer.File, req: Request): Promise<Foto> {
     const foto = new Foto();
-    foto.fileName = file.key;
+    foto.fileName = file.filename;
     foto.contentLength = file.size;
     foto.contentType = file.mimetype;
-    foto.url = file.location;
+    foto.url = file.destination + '/' + file.filename;             
 
     return await this.fotoRepository.save(foto);
   }
